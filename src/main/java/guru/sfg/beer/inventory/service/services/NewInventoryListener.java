@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Slf4j
 @Component
@@ -21,7 +23,7 @@ public class NewInventoryListener {
         log.debug("Got Inventory: {} ", event.toString());
 
         beerInventoryRepository.save(BeerInventory.builder()
-                .beerId(event.getBeerDto().getId())
+                .beerId(UUID.fromString(String.valueOf(event.getBeerDto().getId())))
                 .upc(event.getBeerDto().getUpc())
                 .quantityOnHand(event.getBeerDto().getQuantityOnHand())
                 .build());
